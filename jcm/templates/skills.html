@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skills</title>
+</head>
+<body>
+ <table>
+   <tr>
+     <th>ID</th>
+     <th>Name</th>
+   </tr>
+   {% for skill in skills %}
+   <tr>
+       <td>{{skill.id}}</td>
+       <td>{{skill.name}}</td>
+   </tr>
+   {% endfor %}
+</table>
+</body>
+</html>
