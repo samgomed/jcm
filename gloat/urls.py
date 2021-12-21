@@ -24,6 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('jcm/', TemplateView.as_view(template_name='jcm/templates/main.html')),
     path('jcm/skill/', jcm.views.SkillView.as_view()),
+    path('jcm/candidate/', jcm.views.CandidateView.as_view()),
+    path('jcm/job/', jcm.views.JobView.as_view()),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

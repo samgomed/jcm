@@ -19,7 +19,7 @@ class Job(models.Model):
 
 class CandidatesSkills(models.Model):
     skill = models.ForeignKey(Skill, on_delete = models.SET_NULL, null=True)
-    candidate = models.ForeignKey(Candidate, on_delete = models.SET_NULL, null=True )
+    candidate = models.ForeignKey(Candidate, on_delete = models.SET_NULL, null=True)
 
 
 class JobsSkills(models.Model):

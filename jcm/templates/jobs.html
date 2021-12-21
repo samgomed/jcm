@@ -2,27 +2,27 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Skills</title>
+        <title>Jobs</title>
     </head>
     <body>
         <!--<div style = "margin: auto; width: 50%; text-align: center;">-->
             <table>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>Title</th>
                 </tr>
-                {% for skill in skills %}
+                {% for job in jobs %}
                <tr>
-                   <td>{{skill.id}}</td>
-                   <td>{{skill.name}}</td>
+                   <td>{{job.id}}</td>
+                   <td>{{job.title}}</td>
                </tr>
                {% endfor %}
             </table>
 
-            <form action="/jcm/skill/" method="post">
+            <form action="/jcm/job/" method="post">
                 {% csrf_token %}
                 <!--{{ form }}-->
-                <input id="name" type="text" name="name" maxlength="100" required>
+                <input id="title" type="text" name="title" maxlength="100" required>
                 <input type="submit" value="Submit">
             </form>
         <!--</div>-->
