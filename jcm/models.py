@@ -18,10 +18,10 @@ class Job(models.Model):
 
 
 class CandidatesSkills(models.Model):
-    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    skill = models.ForeignKey(Skill, on_delete = models.SET_NULL, null=True)
+    candidate = models.ForeignKey(Candidate, on_delete = models.SET_NULL, null=True )
 
 
 class JobsSkills(models.Model):
-    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
-    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    skill = models.ForeignKey(Skill, on_delete = models.SET_NULL, null=True)
+    job = models.ForeignKey(Job, on_delete=models.SET_NULL, null=True)
