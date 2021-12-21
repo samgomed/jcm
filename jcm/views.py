@@ -4,8 +4,22 @@ from django.shortcuts import render
 # Create your views here.
 from django.views import View
 from jcm.models import Skill
+from jcm.models import Candidate
 from jcm.forms import SkillForm
 
+class CandidateView(View):
+    def get(self, request):
+        skills_set = Skill.objects.all()
+        candidate_set = Candidate.objects.all()
+
+        context = {
+            "skills" : skills_set,
+            "candidates" : candidate_set
+        }
+        return render(request, 'jcm/templates/candidates.html', context)
+
+    def post(self, request):
+        pass
 
 class SkillView(View):
     def get(self, request):
