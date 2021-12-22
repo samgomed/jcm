@@ -3,18 +3,42 @@
     <head>
         <meta charset="UTF-8">
         <title>Candidats for job {{ job_name }}</title>
+        <style>
+            #data {
+              font-family: Arial, Helvetica, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+            }
+
+            #data td, #data th {
+              border: 1px solid #3E0668;
+              padding: 8px;
+            }
+
+            #data tr:nth-child(even){background-color: #f2f2f2;}
+
+            #data tr:hover {background-color: #ddd;}
+
+            #data th {
+              padding-top: 12px;
+              padding-bottom: 12px;
+              text-align: left;
+              background-color: #3E0668;
+              color: white;
+            }
+        </style>
     </head>
     <body>
         <!--<div style = "margin: auto; width: 50%; text-align: center;">-->
-            <table>
+            <table id = "data">
                 <tr>
                     <th>ID</th>
-                    <!--<th>Name</th>-->
+                    <th>Candidate Description</th>
                 </tr>
                 {% for candidate_id in candidates_ids %}
                <tr>
                    <td>{{ candidate_id }}</td>
-                   <!--<td>{{skill.name}}</td>-->
+                   <td><a href="{% url 'candidate_view' candidate_id %}">Description</a></td>
                </tr>
                {% endfor %}
             </table>
@@ -29,5 +53,7 @@
             </form>
         -->
         <!--</div>-->
+        <a href="/jcm/job/">Back to Jobs</a>
+        <a href="/jcm/">Back to Homepage</a>
     </body>
 </html>

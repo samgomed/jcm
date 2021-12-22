@@ -35,6 +35,8 @@ class CandidateFinderView(View):
             candidate_id = candidate['id']
             candidate_skills = [skill['name'] for skill in Candidate.objects.get(pk = candidate_id).skills.values()]
             intersection = set(candidate_skills).intersection(job_skills)
+            if (len(intersection) < max_intersection):
+                continue
             if len(intersection) > max_intersection:
                 candidates.clear()
             candidates.append(candidate['id'])
@@ -76,7 +78,7 @@ class JobView(View):
         js.save()
         return HttpResponseRedirect('/jcm/job/'+ id)
 
-class CandidateView(View):
+class CandidatesView(View):
     def get(self, request):
         candidate_set = Candidate.objects.all()
 
@@ -86,10 +88,29 @@ class CandidateView(View):
         return render(request, 'jcm/templates/candidates.html', context)
 
     def post(self, request):
-        form = CandidateForm(request.POST)
+        form = CandidatesForm(request.POST)
         new_candidate = form.save()
         return HttpResponseRedirect('/jcm/candidate')
 
+class CandidateView(View):
+    def get(self, request, id):
+        candidate = Candidate.objects.get(pk=int(id))
+        candidate_skills = [skill['name'] for skill in candidate.skills.values()]
+        context = {
+            "candidate_id": id,
+            "candidate_title": candidate.title,
+            "candidate_skills": candidate_skills,
+            "form" : CandidateForm()
+        }
+        return render(request, 'jcm/templates/candidate.html', context)
+
+    def post(self, request, id):
+        skill_name = request.POST['skill_name']
+        candidate_skill = Skill.objects.get(name = skill_name)
+        candidate_object = Candidate.objects.get(pk = int(id))
+        js = CandidatesSkills(skill = candidate_skill, candidate = candidate_object)
+        js.save()
+        return HttpResponseRedirect('/jcm/candidate/'+ id)
 
 class SkillView(View):
     def get(self, request):

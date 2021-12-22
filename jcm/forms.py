@@ -8,7 +8,7 @@ class SkillForm(ModelForm):
         fields = ['name']
 
 
-class CandidateForm(ModelForm):
+class CandidatesForm(ModelForm):
     class Meta:
         model = Candidate
         fields = ['title']
@@ -21,4 +21,7 @@ class JobsForm(ModelForm):
 
 
 class JobForm(forms.Form):
+    skill_name = forms.SlugField()
+
+class CandidateForm(forms.Form):
     skill_name = forms.SlugField()
