@@ -2,30 +2,32 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Jobs</title>
+        <title>Candidats for job {{ job_name }}</title>
     </head>
     <body>
         <!--<div style = "margin: auto; width: 50%; text-align: center;">-->
             <table>
                 <tr>
                     <th>ID</th>
-                    <th>Title</th>
-
+                    <!--<th>Name</th>-->
                 </tr>
-                {% for job in jobs %}
+                {% for candidate_id in candidates_ids %}
                <tr>
-                   <td>{{job.id}}</td>
-                   <td>{{job.title}}</td>
+                   <td>{{ candidate_id }}</td>
+                   <!--<td>{{skill.name}}</td>-->
                </tr>
                {% endfor %}
             </table>
 
-            <form action="/jcm/job/" method="post">
+        <!--
+            <form action="/jcm/skill/" method="post">
+
                 {% csrf_token %}
-                <!--{{ form }}-->
-                <input id="title" type="text" name="title" maxlength="100" required>
+
+                <input id="name" type="text" name="name" maxlength="100" required>
                 <input type="submit" value="Submit">
             </form>
+        -->
         <!--</div>-->
     </body>
 </html>

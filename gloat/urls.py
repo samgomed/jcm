@@ -26,6 +26,7 @@ urlpatterns = [
     path('jcm/skill/', jcm.views.SkillView.as_view()),
     path('jcm/candidate/', jcm.views.CandidateView.as_view()),
     path('jcm/job/', jcm.views.JobView.as_view()),
+    path('jcm/job/<slug:id>/candidates', jcm.views.CandidateFinderView.as_view()),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

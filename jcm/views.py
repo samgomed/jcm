@@ -8,13 +8,51 @@ from jcm.models import Candidate
 from jcm.forms import SkillForm, CandidateForm, JobForm
 
 
+class CandidateFinderView(View):
+    def get(self, request, id):
+        job_id = int(id)
+        job = Job.objects.get(pk=job_id)
+        candidates_ids = self.candidate_finder(job)
+        context = {
+            'job_id' : job_id,
+            'job_name': job.title,
+            'candidates_ids' : candidates_ids
+        }
+        return render(request, 'jcm/templates/match.html', context)
+
+
+    def post(self, request):
+        pass
+    ''' 
+    This method takes a job and returns a list of the most matching candidates.
+    If the job has no skills, the matching criterion is the title; Otherwise, it is the intersection
+    between the job's skills and the candidates' skills.
+    '''
+    def candidate_finder(self, job):
+        job_skills = [skill['name'] for skill in job.skills.values()]
+
+        job_candidates = Candidate.objects.filter(title=job.title).values()
+
+        if len(job_skills) == 0:
+            return [candidate['id'] for candidate in job_candidates]
+
+        max_intersection = 0
+        candidates = []
+        for candidate in job_candidates:
+            candidate_id = candidate['id']
+            candidate_skills = [skill['name'] for skill in Candidate.objects.get(pk = candidate_id).skills.values()]
+            intersection = set(candidate_skills).intersection(job_skills)
+            if len(intersection) > max_intersection:
+                candidates.clear()
+            candidates.append(candidate['id'])
+
+        return candidates
+
 class JobView(View):
     def get(self, request):
-        #skills_set = Skill.objects.all()
         job_set = Job.objects.all()
 
         context = {
-            #"skills" : skills_set,
             "jobs": job_set
         }
         return render(request, 'jcm/templates/jobs.html', context)
@@ -28,11 +66,9 @@ class JobView(View):
 
 class CandidateView(View):
     def get(self, request):
-        #skills_set = Skill.objects.all()
         candidate_set = Candidate.objects.all()
 
         context = {
-            #"skills" : skills_set,
             "candidates": candidate_set
         }
         return render(request, 'jcm/templates/candidates.html', context)
