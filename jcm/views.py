@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views import View
 from jcm.models import Skill, Job
 from jcm.models import Candidate, CandidatesSkills,JobsSkills
-from jcm.forms import SkillForm, CandidateForm, JobForm, JobsForm
+from jcm.forms import SkillForm, CandidateForm, JobForm, JobsForm, CandidatesForm
 
 
 class CandidateFinderView(View):
@@ -39,7 +39,8 @@ class CandidateFinderView(View):
                 continue
             if len(intersection) > max_intersection:
                 candidates.clear()
-            candidates.append(candidate['id'])
+                max_intersection = len(intersection)
+            candidates.append(candidate_id)
 
         return candidates
 
