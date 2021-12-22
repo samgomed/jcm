@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from jcm.models import Skill, Candidate, Job
-
+from django import forms
 
 class SkillForm(ModelForm):
     class Meta:
@@ -14,7 +14,11 @@ class CandidateForm(ModelForm):
         fields = ['title']
 
 
-class JobForm(ModelForm):
+class JobsForm(ModelForm):
     class Meta:
         model = Job
         fields = ['title']
+
+
+class JobForm(forms.Form):
+    skill_name = forms.SlugField()

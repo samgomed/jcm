@@ -5,27 +5,25 @@
         <title>Jobs</title>
     </head>
     <body>
-        <!--<div style = "margin: auto; width: 50%; text-align: center;">-->
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+            </tr>
+            {% for job in jobs %}
+           <tr>
+               <td>{{job.id}}</td>
+               <td>{{job.title}}</td>
+               <td><a href="{% url 'job_view' job.id %}">Description</a></td>
+           </tr>
+           {% endfor %}
+        </table>
 
-                </tr>
-                {% for job in jobs %}
-               <tr>
-                   <td>{{job.id}}</td>
-                   <td>{{job.title}}</td>
-               </tr>
-               {% endfor %}
-            </table>
-
-            <form action="/jcm/job/" method="post">
-                {% csrf_token %}
-                <!--{{ form }}-->
-                <input id="title" type="text" name="title" maxlength="100" required>
-                <input type="submit" value="Submit">
-            </form>
-        <!--</div>-->
+        <form action="/jcm/job/" method="post">
+            {% csrf_token %}
+            <input id="title" type="text" name="title" maxlength="100" required>
+            <input type="submit" value="Submit">
+        </form>
     </body>
 </html>

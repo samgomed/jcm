@@ -4,8 +4,8 @@ from django.shortcuts import render
 # Create your views here.
 from django.views import View
 from jcm.models import Skill, Job
-from jcm.models import Candidate
-from jcm.forms import SkillForm, CandidateForm, JobForm
+from jcm.models import Candidate, CandidatesSkills,JobsSkills
+from jcm.forms import SkillForm, CandidateForm, JobForm, JobsForm
 
 
 class CandidateFinderView(View):
@@ -21,13 +21,6 @@ class CandidateFinderView(View):
         return render(request, 'jcm/templates/match.html', context)
 
 
-    def post(self, request):
-        pass
-    ''' 
-    This method takes a job and returns a list of the most matching candidates.
-    If the job has no skills, the matching criterion is the title; Otherwise, it is the intersection
-    between the job's skills and the candidates' skills.
-    '''
     def candidate_finder(self, job):
         job_skills = [skill['name'] for skill in job.skills.values()]
 
@@ -48,21 +41,40 @@ class CandidateFinderView(View):
 
         return candidates
 
-class JobView(View):
+
+
+class JobsView(View):
     def get(self, request):
         job_set = Job.objects.all()
-
         context = {
             "jobs": job_set
         }
         return render(request, 'jcm/templates/jobs.html', context)
 
     def post(self, request):
-        form = JobForm(request.POST)
+        form = JobsForm(request.POST)
         new_job = form.save()
         return HttpResponseRedirect('/jcm/job')
 
+class JobView(View):
+    def get(self, request, id):
+        job = Job.objects.get(pk=int(id))
+        job_skills = [skill['name'] for skill in job.skills.values()]
+        context = {
+            "job_id": id,
+            "job_title": job.title,
+            "job_skills": job_skills,
+            "form" : JobForm()
+        }
+        return render(request, 'jcm/templates/job.html', context)
 
+    def post(self, request, id):
+        skill_name = request.POST['skill_name']
+        job_skill = Skill.objects.get(name = skill_name)
+        job_object = Job.objects.get(pk = int(id))
+        js = JobsSkills(skill = job_skill, job = job_object)
+        js.save()
+        return HttpResponseRedirect('/jcm/job/'+ id)
 
 class CandidateView(View):
     def get(self, request):

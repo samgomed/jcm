@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Skills of Job {{job_title}}</title>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th>Skill</th>
+                <!--<th>Title</th>-->
+                <!--<th>Description</th>-->
+            </tr>
+            {% for skill in job_skills %}
+           <tr>
+               <td>{{skill}}</td>
+           </tr>
+           {% endfor %}
+        </table>
+
+        <form action="#" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+
+        <a href="/jcm/job/">Back to Jobs</a>
+    </body>
+</html>

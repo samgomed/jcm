@@ -25,7 +25,8 @@ urlpatterns = [
     path('jcm/', TemplateView.as_view(template_name='jcm/templates/main.html')),
     path('jcm/skill/', jcm.views.SkillView.as_view()),
     path('jcm/candidate/', jcm.views.CandidateView.as_view()),
-    path('jcm/job/', jcm.views.JobView.as_view()),
+    path('jcm/job/', jcm.views.JobsView.as_view()),
+    path('jcm/job/<slug:id>/', jcm.views.JobView.as_view(), name='job_view'),
     path('jcm/job/<slug:id>/candidates', jcm.views.CandidateFinderView.as_view()),
 ]
 
